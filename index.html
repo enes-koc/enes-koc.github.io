@@ -4,286 +4,432 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Enes Koc | Game & Marketing Developer</title>
 
-  <title>Enes Koc</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+  <style>
+    :root {
+      --bg-dark: #030712;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --accent-primary: #8b5cf6;
+      --accent-secondary: #06b6d4;
+      --text-white: #ffffff;
+      --text-dim: #94a3b8;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* --- Cursor Glow --- */
+    .cursor-glow {
+      width: 50px; height: 50px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+      position: fixed; pointer-events: none; z-index: 9999;
+      border-radius: 50%; transform: translate(-50%, -50%);
+    }
+
+    .bg-animation {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #0f172a 0%, #030712 100%);
+    }
+
+    .aura {
+      position: absolute; width: 40vw; height: 40vw; border-radius: 50%;
+      filter: blur(100px); opacity: 0.2; animation: float 20s infinite alternate;
+    }
+    .aura-1 { background: var(--accent-primary); top: -10%; left: -10%; }
+    .aura-2 { background: var(--accent-secondary); bottom: -10%; right: -10%; animation-delay: -5s; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(100px, 100px) scale(1.2); }
+    }
+
+    /* --- Header & Hero --- */
+    #header { padding: 20px 0; background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); position: fixed; width: 100%; top: 0; z-index: 1000; }
+    .nav-brand { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
+    .social-link { font-size: 1.4rem; color: var(--text-dim); transition: 0.3s; margin-left: 15px; }
+    .social-link:hover { color: var(--accent-secondary); transform: scale(1.1); }
+    #hero { padding: 200px 0 100px; text-align: center; }
+    .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 800; margin-bottom: 20px; }
+    .hero-subtitle { color: var(--accent-secondary); font-weight: 600; font-size: 1.2rem; min-height: 30px; }
+    .hero-desc { max-width: 750px; margin: 25px auto 40px; color: var(--text-dim); font-size: 1.1rem; line-height: 1.7; }
+
+    /* --- Portfolio Cards (COMPACT UPDATE) --- */
+    .portfolio-card { background: var(--card-bg); backdrop-filter: blur(12px); border-radius: 20px; padding: 22px; height: 100%; border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s ease; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .portfolio-card:hover { transform: translateY(-10px); border-color: var(--accent-primary); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5); }
+    .game-icon { width: 48px; height: 48px; border-radius: 12px; margin-bottom: 18px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); object-fit: cover; }
+    .card-title { font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; }
+    .card-category { color: var(--accent-secondary); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .portfolio-card p.small { font-size: 0.82rem; line-height: 1.5; margin-bottom: 20px; }
+
+    /* --- Scrollable Version Buttons --- */
+    .version-label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 8px; display: block; }
+    .version-scroll-container {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .version-scroll-container::-webkit-scrollbar { display: none; }
+
+    .btn-version {
+      background: rgba(255, 255, 255, 0.05); color: var(--text-white); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 6px 12px; font-weight: 700; font-size: 0.75rem; transition: 0.3s;
+      flex: 0 0 auto; min-width: 42px; text-align: center;
+    }
+    .btn-version:hover {
+      background: var(--accent-primary); border-color: var(--accent-primary); color: white;
+      transform: translateY(-2px); box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+    }
+
+    /* --- Marketing Automation Tool Section --- */
+    .automation-card {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.05), rgba(6, 182, 212, 0.05));
+      border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 30px; padding: 40px;
+    }
+    .tool-list { list-style: none; padding: 0; }
+    .tool-list li { margin-bottom: 15px; display: flex; align-items: flex-start; font-size: 0.95rem; color: var(--text-dim); }
+    .tool-list li i { color: var(--accent-secondary); margin-right: 15px; margin-top: 4px; }
+
+    /* --- Interactive Multi-Device Mockup --- */
+    .device-controls {
+      display: flex; justify: center; gap: 10px; margin-bottom: 20px; position: absolute; top: -65px; left: 50%; transform: translateX(-50%); width: 100%;
+    }
+    .btn-control {
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 15px; border-radius: 10px; font-size: 0.8rem; transition: 0.3s;
+    }
+    .btn-control:hover, .btn-control.active { background: var(--accent-primary); border-color: var(--accent-primary); }
+
+    .phone-mockup {
+      background: #000; border: 10px solid #1f2937; border-radius: 35px; margin: auto; position: relative;
+      box-shadow: 0 0 100px rgba(139, 0, 246, 0.2); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    #qrOverlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 7, 18, 0.9); display: none; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 10; padding: 20px; text-align: center;
+    }
+    #qrcode { background: white; padding: 10px; border-radius: 10px; }
+    #qrcode img { width: 180px; height: 180px; }
+
+    .view-phone.portrait { width: 320px; height: 620px; }
+    .view-phone.landscape { width: 620px; height: 320px; }
+    .view-tablet.portrait { width: 480px; height: 640px; }
+    .view-tablet.landscape { width: 640px; height: 480px; }
+
+    /* --- Modal & Blur Effect --- */
+    body.modal-open #header, body.modal-open #hero, body.modal-open #portfolio, body.modal-open #automation, body.modal-open footer {
+      filter: blur(8px); transition: filter 0.3s ease;
+    }
+    .modal-backdrop.show { opacity: 0.5; background-color: #000; }
+    .modal-content { background: transparent; border: none; align-items: center; }
+    .close-btn { position: absolute; top: -65px; right: -50px; color: white; font-size: 2.5rem; cursor: pointer; opacity: 0.7; transition: 0.3s; }
+    .close-btn:hover { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .close-btn { right: 0; top: -110px; }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- ======= Mobile nav toggle button ======= -->
-  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
 
-  <!-- ======= Header ======= -->
-  <header id="header">
-    <div class="d-flex flex-column">
+<div class="cursor-glow" id="cursor-glow"></div>
+<div class="bg-animation"><div class="aura aura-1"></div><div class="aura aura-2"></div></div>
 
-      <div class="profile">
-        <img src="assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="index.html">Enes Koç</a></h1>
-        <div class="social-links mt-3 text-center">
-          <!--<a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>-->
-          <!--<a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>-->
-          <a href="https://www.instagram.com/crestand_/" target="_blank" class="instagram"><i class="bx bxl-instagram"></i></a>
-          <a href="https://github.com/enes-koc" target="_blank" class="github"><i class="bi bi-github"></i></a>
-          <a href="https://www.linkedin.com/in/enes-koç-769554195/" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-        </div>
-      </div>
-
-      <nav id="navbar" class="nav-menu navbar">
-        <ul>
-          <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
-          <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-          <!--<li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>-->
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
-          <!-- <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li>-->
-          <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
+<header id="header">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="nav-brand">ENES KOC</div>
+    <div class="d-flex">
+      <a href="https://github.com/enes-koc" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
+      <a href="https://linkedin.com/in/enes-koç-769554195/" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
+      <a href="https://instagram.com/crestand_/" target="_blank" class="social-link"><i class="bi bi-instagram"></i></a>
     </div>
-  </header><!-- End Header -->
+  </div>
+</header>
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center align-items-center py-4">
-    <div class="hero-container" data-aos="fade-in">
-      <h1>Enes Koç</h1>
-      <p>I'm <span class="typed" data-typed-items="Game Developer, Playable Ads Developer, Gamer"></span></p>
+<section id="hero">
+  <div class="container" data-aos="fade-up">
+    <h1 class="hero-title">Building Playables & <br><span style="color: var(--accent-primary);">Marketing Tools</span></h1>
+    <div class="hero-subtitle" id="typewriter"></div>
+    <p class="hero-desc">
+      I focus on creating interactive ads and tools that make game marketing easier.
+      Combining <strong>Playable Ad</strong> development with <strong>Unity automation</strong>,
+      I help teams produce high-quality creative content more efficiently through technical solutions.
+    </p>
+
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="#portfolio" class="btn btn-primary px-5 py-3 fw-bold" style="background: var(--accent-primary); border: none; border-radius: 15px;">Playables</a>
+      <a href="#automation" class="btn btn-secondary px-5 py-3 fw-bold" style="background: var(--accent-secondary); border: none; border-radius: 15px;">Marketing Tools</a>
     </div>
-  </section><!-- End Hero -->
+  </div>
+</section>
 
-  <main id="main">
-
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Game - Playable Ads Developer</h2>
+<section id="portfolio" class="py-5">
+  <div class="container">
+    <h2 class="section-title mb-5" data-aos="fade-right">Featured Playables</h2>
+    <div class="row g-3"> <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+      <div class="portfolio-card">
+        <div class="mb-4">
+          <img src="assets/img/portfolio/RR.png" class="game-icon">
+          <div class="card-category">Tower Defense</div>
+          <h4 class="card-title">Raid Rush</h4>
+          <p class="text-dim small">Build custom paths and deploy tactical defenses against epic bosses.</p>
         </div>
-        <div class="row">
-          <!--<div class="col-lg-4" data-aos="fade-right">
-            <img src="assets/img/profile-img.jpg" class="img-fluid" alt="">
-          </div>-->
-          <div class="col-lg-12 pt-4 pt-lg-0 content" data-aos="fade-left">  
-            <p class="fst-italic">
-              Hello! I'm Enes, a game developer working in the Playable Ads position.
-              In the early stages of my career, starting with Unity,
-              I gained experience in the gaming industry by independently developing two game projects.
-              Currently, I am leveraging my expertise in a company, focusing on the creation of playable ads.
-            </p>
-            </div>  
+        <div class="mt-auto">
+          <span class="version-label">Select Version</span>
+          <div class="version-scroll-container">
+            <button onclick="openGame('assets/Playables/RR01.html')" class="btn-version">01</button>
+            <button onclick="openGame('assets/Playables/RR02.html')" class="btn-version">02</button>
+            <button onclick="openGame('assets/Playables/RR03.html')" class="btn-version">03</button>
+            <button onclick="openGame('assets/Playables/RR04.html')" class="btn-version">04</button>
           </div>
         </div>
-
       </div>
-    </section><!-- End About Section -->
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
-      <div class="container">
+    </div>
 
-        <div class="section-title">
-          <h2>Portfolio</h2>
-        </div>
-
-        <div class="row" data-aos="fade-up">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>   
-              <li data-filter=".filter-dl"><img src="assets/img/portfolio/RR.png" alt="RR"> Raid Rush</li>
-              <li data-filter=".filter-bmg"><img src="assets/img/portfolio/BMG.jpg" alt="BMG"> Be My Guest</li>
-              <li data-filter=".filter-dd"><img src="assets/img/portfolio/DD.jpeg" alt="DD"> Deep Dive</li>
-              <li data-filter=".filter-am"><img src="assets/img/portfolio/AM.jpeg" alt="AM"> Airport Master</li>
-              <li data-filter=".filter-hmb"><img src="assets/img/portfolio/HMB.jpg" alt="HMB"> 100 Mystery Buttons</li>
-              <li data-filter=".filter-mtc"><img src="assets/img/portfolio/MTC.png" alt="MTC"> Fashion Famous</li>
-              <li data-filter=".filter-tm"><img src="assets/img/portfolio/TM.png" alt="TM"> Trading Master</li>       
-            </ul>
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/BMG.jpg" class="game-icon">
+            <div class="card-category">Simulation</div>
+            <h4 class="card-title">Be My Guest</h4>
+            <p class="text-dim small">A satisfying experience focused on renovating properties and guest needs.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/BMG01.html')" class="btn-version">01</button>
+              <button onclick="openGame('assets/Playables/BMG02.html')" class="btn-version">02</button>
+            </div>
           </div>
         </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dl">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/RR01.html', 'Raid Rush')" style="margin-top: 10px; padding: 10px; min-width:250px;">Raid Rush-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dl">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/RR02.html', 'Raid Rush')" style="margin-top: 10px; padding: 10px;min-width:250px;">Raid Rush-02</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dl">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/RR03.html', 'Raid Rush')" style="margin-top: 10px; padding: 10px;min-width:250px;">Raid Rush-03</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dl">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/RR04.html', 'Raid Rush')" style="margin-top: 10px; padding: 10px;min-width:250px;">Raid Rush-04</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-bmg">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/BMG01.html', 'Be My Guest')" style="margin-top: 10px; padding: 10px;min-width:250px;">Be My Guest-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-bmg">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/BMG02.html', 'Be My Guest')" style="margin-top: 10px; padding: 10px;min-width:250px;">Be My Guest-02</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dd">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/DD01.html', 'Deep Dive')" style="margin-top: 10px; padding: 10px;min-width:250px;">Deep Dive-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-dd">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/DD02.html', 'Deep Dive')" style="margin-top: 10px; padding: 10px;min-width:250px;">Deep Dive-02</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-am">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/AM01.html', 'Airport Master')" style="margin-top: 10px; padding: 10px;min-width:250px;">Airport Master-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-hmb">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/HMB01.html', '100 Mystery Buttons')" style="margin-top: 10px; padding: 10px; min-width:250px;">100 Mystery Buttons-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-mtc">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/MTC01.html', 'Fashion Famous')" style="margin-top: 10px; padding: 10px;min-width:250px;">Fashion Famous-01</button></div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-tm">
-            <div class="portfolio-links text-center">
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="setIframeSource('assets/Playables/TM01.html', 'Trading Master')" style="margin-top: 10px; padding: 10px;min-width:250px;">Trading Master-01</button></div>
-          </div>
-
-        </div>
-
       </div>
-    </section>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-bs-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-static" role="document">
-      <div class="modal-content">
-          <div class="modal-header">     
-              <h4 class="modal-title" id="myModalLabel">Modal title</h4>   
-              <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal" onclick="resetIframe('')"></button>
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/DD.jpeg" class="game-icon">
+            <div class="card-category">Survival</div>
+            <h4 class="card-title">Deep Dive</h4>
+            <p class="text-dim small">Underwater adventure balancing oxygen and rewarding resource collection.</p>
           </div>
-          <div class="modal-body text-center">
-              <iframe id="modalIframe" src="" width="450px" height="800px" frameborder="0"></iframe>
-          </div>       
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/DD01.html')" class="btn-version">01</button>
+              <button onclick="openGame('assets/Playables/DD02.html')" class="btn-version">02</button>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/AM.jpeg" class="game-icon">
+            <div class="card-category">Management</div>
+            <h4 class="card-title">Airport Master</h4>
+            <p class="text-dim small">Airport logistics simulator featuring interactive security and flight checks.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/AM01.html')" class="btn-version">01</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/HMB.jpg" class="game-icon">
+            <div class="card-category">Puzzle</div>
+            <h4 class="card-title">100 Buttons</h4>
+            <p class="text-dim small">Viral-inspired experience leveraging curiosity and risk-reward choices.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/HMB01.html')" class="btn-version">01</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/MTC.png" class="game-icon">
+            <div class="card-category">Creative</div>
+            <h4 class="card-title">Fashion Famous</h4>
+            <p class="text-dim small">Avatar customization where players compete in runway challenges.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/MTC01.html')" class="btn-version">01</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6" data-aos="zoom-in">
+        <div class="portfolio-card">
+          <div class="mb-4">
+            <img src="assets/img/portfolio/TM.png" class="game-icon">
+            <div class="card-category">Trading</div>
+            <h4 class="card-title">Trading Master</h4>
+            <p class="text-dim small">Barter simulator focused on negotiation and satisfying toy trading.</p>
+          </div>
+          <div class="mt-auto">
+            <span class="version-label">Select Version</span>
+            <div class="version-scroll-container">
+              <button onclick="openGame('assets/Playables/TM01.html')" class="btn-version">01</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="automation" class="py-5">
+  <div class="container">
+    <h2 class="section-title mb-5" data-aos="fade-right">Marketing Automation & Pipeline</h2>
+    <div class="automation-card" data-aos="fade-up">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="mb-4">
+            <span class="card-category">Unity Infrastructure</span>
+            <h3 class="fw-bold">Marketing-Ready Builds</h3>
+            <p class="text-dim mt-3">I develop custom Unity environments and scripted sequences that empower marketing teams to generate high-quality creative assets efficiently.</p>
+          </div>
+          <ul class="tool-list">
+            <li><i class="bi bi-gear-fill"></i> <span><strong>Scripted Sequences:</strong> Automated gameplay for consistent video capture.</span></li>
+            <li><i class="bi bi-palette-fill"></i> <span><strong>Dynamic Content:</strong> Real-time skin and environment switching for artists.</span></li>
+            <li><i class="bi bi-lightning-charge-fill"></i> <span><strong>Pipeline Efficiency:</strong> Optimized export workflows for multiple social channels.</span></li>
+          </ul>
+        </div>
+        <div class="col-lg-6 text-center">
+          <div class="p-4 rounded-4" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);">
+            <i class="bi bi-unity" style="font-size: 5rem; color: var(--text-dim);"></i>
+            <p class="small text-dim mt-3 opacity-50">Custom Pipeline Visual / GIF</p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="gameModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="position-relative">
+        <div class="device-controls">
+          <button class="btn-control active" onclick="setDevice('phone')"><i class="bi bi-phone"></i> Phone</button>
+          <button class="btn-control" onclick="setDevice('tablet')"><i class="bi bi-tablet"></i> Tablet</button>
+          <div style="width: 2px; background: rgba(255,255,255,0.1); margin: 0 5px;"></div>
+          <button class="btn-control" onclick="toggleOrientation()"><i class="bi bi-arrow-clockwise"></i> Rotate</button>
+          <button class="btn-control" onclick="toggleQR()"><i class="bi bi-qr-code"></i> QR</button>
+        </div>
+        <span class="close-btn" data-bs-dismiss="modal">&times;</span>
+        <div id="mockupContainer" class="phone-mockup view-phone portrait">
+          <iframe id="gameIframe" src="" style="width:100%; height:100%; border:none;"></iframe>
+          <div id="qrOverlay">
+            <div id="qrcode"></div>
+            <p class="mt-3 small text-white fw-bold">Scan to play on mobile</p>
+            <button class="btn btn-sm btn-outline-light mt-2" onclick="toggleQR()">Close QR</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<!-- End Portfolio Section -->
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
+<footer class="py-5 text-center mt-5">
+  <p class="text-dim small">Built for game marketing excellence.</p>
+  <a href="mailto:lcrestandl@gmail.com" class="fw-bold text-decoration-none" style="color: var(--accent-secondary);">lcrestandl@gmail.com</a>
+</footer>
 
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>You can contact me via E-Mail or LinkedIn.</p>
-        </div>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true });
 
-        <div class="row" data-aos="fade-in">
+  const glow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
 
-          <div class="col-lg-12 d-flex align-items-stretch">
-            <div class="info">         
-              <div class="email">
-                <i class="bi bi-envelope" href="mailto:some@email.com" target="_blank" class="btn btn-primary"></i>
-                <h4>Email:</h4>
-                <p><a href="mailto:some@email.com" target="_blank">lcrestandl@gmail.com</a></p>
-                
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <div class="copyright">     
-      </div>
-    </div>
-  </footer><!-- End  Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-  <script>
-    function resetIframe(src) {
-        var iframe = document.getElementById('modalIframe');
-        iframe.src = 'about:blank';
-        iframe.src = src;
-        $('#myModal').modal('hide');
+  let qrGenerator = null;
+  function toggleQR() {
+    const overlay = document.getElementById('qrOverlay');
+    const isVisible = overlay.style.display === 'flex';
+    overlay.style.display = isVisible ? 'none' : 'flex';
+    if (!isVisible && !qrGenerator) {
+      const fullUrl = window.location.origin + '/' + document.getElementById('gameIframe').getAttribute('src');
+      qrGenerator = new QRCode(document.getElementById("qrcode"), {
+        text: fullUrl, width: 180, height: 180,
+        colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+      });
     }
-  
-    function setIframeSource(src, title) {
-        var iframe = document.getElementById('modalIframe');
-        iframe.src = src;
+  }
 
-        var modalTitle = document.getElementById('myModalLabel');
-        modalTitle.innerText = title;
+  let currentDevice = 'phone', currentOrientation = 'portrait';
+  const mockup = document.getElementById('mockupContainer'), gIframe = document.getElementById('gameIframe');
 
-        $('#myModal').modal('show');
-    }
-  </script>
+  function setDevice(device) {
+    currentDevice = device; updateMockup();
+    document.querySelectorAll('.btn-control').forEach(b => b.classList.remove('active'));
+    if(event) event.currentTarget.classList.add('active');
+  }
 
+  function toggleOrientation() {
+    currentOrientation = (currentOrientation === 'portrait') ? 'landscape' : 'portrait';
+    updateMockup();
+  }
 
+  function updateMockup() {
+    mockup.className = `phone-mockup view-${currentDevice} ${currentOrientation}`;
+  }
 
+  const myModalEl = document.getElementById('gameModal');
+  const gModal = new bootstrap.Modal(myModalEl);
+
+  function openGame(url) { gIframe.src = url; gModal.show(); }
+
+  myModalEl.addEventListener('hidden.bs.modal', function () {
+    gIframe.src = ''; document.getElementById('qrOverlay').style.display = 'none';
+    document.getElementById('qrcode').innerHTML = ''; qrGenerator = null;
+    currentDevice = 'phone'; currentOrientation = 'portrait'; updateMockup();
+  });
+
+  const typewriter = document.getElementById('typewriter');
+  const words = ["Playable Ads Developer", "Marketing Developer"];
+  let i = 0, j = 0, isDeleting = false;
+  function type() {
+    let current = words[i];
+    if (isDeleting) { typewriter.textContent = current.substring(0, j--); if (j < 0) { isDeleting = false; i = (i + 1) % words.length; } }
+    else { typewriter.textContent = current.substring(0, j++); if (j > current.length) isDeleting = true; }
+    setTimeout(type, isDeleting ? 50 : 150);
+  }
+  type();
+</script>
 </body>
-
-
-
 </html>
